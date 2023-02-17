@@ -25,7 +25,7 @@ function App() {
           setNoResults(true);
         }
       } catch (error) {
-        console.error(`${error} you don gun fucked upppp`);
+        console.error(`${error}`);
       }
     }
     fetchData();
