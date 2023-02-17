@@ -9,23 +9,33 @@ import SearchResults from './Components/SearchResullts/SearchResults';
 
 function App() {
   const [userData, setUserData] = useState();
+  const [searchQuery, setSearchQuery] = useState('octocat');
+  const [noResults, setNoResults] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      const data = await response.json();
-      console.log(data);
-      setUserData(data);
+      try {
+        const response = await fetch(
+          `https://api.github.com/users/${searchQuery}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setUserData(data);
+        if (data.message) {
+          setNoResults(true);
+        }
+      } catch (error) {
+        console.error(`${error} you don gun fucked upppp`);
+      }
     }
     fetchData();
-  }, []);
+  }, [searchQuery]);
 
   return (
     <div className="App-container">
       <NavBar />
-      <SearchBar />
-      <SearchResults />
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchResults userData={userData} noResults={noResults} />
     </div>
   );
 }
