@@ -8,34 +8,47 @@ import SearchBar from './Components/SearchBar';
 import SearchResults from './Components/SearchResullts/SearchResults';
 
 function App() {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
   const [searchQuery, setSearchQuery] = useState('octocat');
-  const [noResults, setNoResults] = useState(false);
+  const [validUsername, setValidUsername] = useState(true);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
         const response = await fetch(
           `https://api.github.com/users/${searchQuery}`
         );
         const data = await response.json();
         console.log(data);
         setUserData(data);
-        if (data.message) {
-          setNoResults(true);
+        setLoading(false);
+
+        if (response.ok) {
+          setUserData(data);
+        } else if (data.message) {
+          setValidUsername(false);
+        } else {
+          setError(data.message);
+          console.log(error);
         }
       } catch (error) {
-        console.error(`${error}`);
+        setError(error.message);
+        console.log(error);
       }
     }
     fetchData();
-  }, [searchQuery]);
+  }, [searchQuery, error]);
 
   return (
-    <div className="App-container">
+    <div className="app-container">
       <NavBar />
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <SearchResults userData={userData} noResults={noResults} />
+      {loading && <h1>Loading...</h1>}
+      {validUsername && <SearchResults userData={userData} />}
+      {!validUsername && <h1>No Results braaaa</h1>}
     </div>
   );
 }
