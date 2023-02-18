@@ -26,19 +26,21 @@ html {
   --dm-grayishblue: #1e2a47;
 }
 
+/* global styles */
+img {
+  display: block;
+}
+
 body {
   background: #141d2f;
   color: white;
   font-family: 'Space Mono', monospace;
-}
-
-/* App */
-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  margin: 0 auto;
 }
 .app-container {
   border: 1px solid white;
