@@ -43,7 +43,7 @@ body {
   margin: 0 auto;
 }
 .app-container {
-  border: 1px solid white;
+  /* border: 1px solid white; */
   min-width: 250px;
   max-width: 730px;
   margin: 1.5rem;

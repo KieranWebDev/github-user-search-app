@@ -1,4 +1,9 @@
 import React from 'react';
+
+// styles
+import './SearchBar.css';
+import searchicon from '../images/icon-search.svg';
+
 import { useState } from 'react';
 
 export default function SearchBar(props) {
@@ -11,11 +16,12 @@ export default function SearchBar(props) {
   }
 
   return (
-    <div>
-      <form action="#">
+    <div className="search-bar-container">
+      <form className="form-container" action="#">
+        <img src={searchicon} alt="searchicon" />
         <input
           type="text"
-          placeholder="search for a user here"
+          placeholder="Search Githib username..."
           onChange={(e) => setTempVal(e.target.value)}
         />
         <button onClick={handleSubmit}>Search</button>
